@@ -1,4 +1,4 @@
 package com.javarush.pavlichenko.interfaces;
 
-public interface CanEat {
+public interface Herbivore extends CanEat{
 }
