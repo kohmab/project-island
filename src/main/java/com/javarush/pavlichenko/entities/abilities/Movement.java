@@ -48,10 +48,12 @@ public class Movement implements Ability {
     }
 
     private Coordinate getNewCoordinate(Coordinate current) {
-        Coordinate newCoordinate;
-        do {
-            newCoordinate = current.add(Direction.getRandom().getDirection());
-        } while (creature.getIsland().isForbiddenCoordinate(newCoordinate));
+        Coordinate newCoordinate = current;
+        for (int i = 0; i < speed; i++) {
+            do {
+                newCoordinate = newCoordinate.add(Direction.getRandom().getDirection());
+            } while (creature.getIsland().isForbiddenCoordinate(newCoordinate));
+        }
         return newCoordinate;
     }
 

@@ -2,6 +2,7 @@ package com.javarush.pavlichenko.entities.abilities;
 
 import com.javarush.pavlichenko.entities.concrete.TestChild;
 import com.javarush.pavlichenko.entities.island.Cell;
+import com.javarush.pavlichenko.entities.islandentitycreator.IslandEntityCreator;
 import com.javarush.pavlichenko.enums.Gender;
 import com.javarush.pavlichenko.exceptions.CellIsFilledException;
 import com.javarush.pavlichenko.entities.abilities.parameters.AbilityParameter;
@@ -68,11 +69,9 @@ public class Multiplication implements Ability {
     private void giveBirth() {
         isPregnant = false;
         pregnancyStage = 0;
-        Cell cell = animal.getIsland().getCell(animal.getCoordinate());
-        TestChild child = new TestChild(animal.getIsland(), animal.getCoordinate());
         try {
             log.debug("{} trying to give birth", animal);
-            cell.put(child);
+            IslandEntity child = IslandEntityCreator.getInstance().create(animal.getClass(), animal.getCoordinate());
             log.debug("{} give birth for {}", animal, child);
         } catch (CellIsFilledException e) {
             log.debug("{} could not give birth. Cell is filled", animal);

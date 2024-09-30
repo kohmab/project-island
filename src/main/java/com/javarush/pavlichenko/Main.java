@@ -14,9 +14,9 @@ public class Main {
         log.info("<<<<<<<<<<< START >>>>>>>>>>>>");
 
         Island island = new Island(3, 4);
-        //IslandPopulator islandPopulator = new TestIslandPopulator(island);
-        //islandPopulator.populateIsland();
-        IslandEntityCreator islandEntityCreator = new IslandEntityCreator(island);
+
+        IslandEntityCreator.init(island);
+        IslandEntityCreator islandEntityCreator = IslandEntityCreator.getInstance();
         try {
             islandEntityCreator.create(TestPrey.class, new Coordinate(0, 0));
         } catch (CellIsFilledException e) {

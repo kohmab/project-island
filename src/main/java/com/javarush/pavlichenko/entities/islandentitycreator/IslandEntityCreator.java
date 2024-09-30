@@ -25,18 +25,34 @@ public class IslandEntityCreator {
 
     private final IslandEntityParametersProvider parametersProvider = new IslandEntityParametersProvider();
 
-    public IslandEntityCreator(Island island) {
-        this.island = island;
+    private static IslandEntityCreator instance;
+
+    public static void init(Island island) {
+        instance = new IslandEntityCreator(island);
     }
 
-    public void create(Class<? extends IslandEntity> entityClass, Coordinate coordinate) throws CellIsFilledException {
+    public static IslandEntityCreator getInstance() {
+        if (isNull(instance)) {
+            throw new IllegalStateException("IslandEntityCreator no initialized. Use init.");
+        }
+        return instance;
+    }
+
+    public synchronized IslandEntity create(Class<? extends IslandEntity> entityClass, Coordinate coordinate) throws CellIsFilledException {
         IslandEntity entity = createBlank(entityClass);
         configureEntity(entity);
 
         entity.setCoordinate(coordinate);
         entity.getIsland().getCell(coordinate).put(entity);
-        log.debug("Created new entity: {}.",entity);
+        log.debug("Created new entity: {}.", entity);
+        return entity;
     }
+
+
+    private IslandEntityCreator(Island island) {
+        this.island = island;
+    }
+
 
     private IslandEntity createBlank(Class<? extends IslandEntity> entityClass) {
         IslandEntity entity = null;
@@ -53,7 +69,7 @@ public class IslandEntityCreator {
     private void configureEntity(IslandEntity entity) {
         Class<? extends IslandEntity> clazz = entity.getClass();
         AllAbilitiesParameters allParameters = parametersProvider.getParametersFor(clazz);
-        configureAbilities(entity,allParameters);
+        configureAbilities(entity, allParameters);
     }
 
     private List<Ability> getAbilitiesOf(IslandEntity entity) {
@@ -83,9 +99,9 @@ public class IslandEntityCreator {
 
                 configureAbility(ability, parameters);
 
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException  e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 throw new RuntimeException(e);
-            } catch (ConfigurationException e){
+            } catch (ConfigurationException e) {
                 throw new RuntimeException(e.getMessage() + "\nError while loading configuration for " + entityClass);
             }
         }
@@ -114,7 +130,7 @@ public class IslandEntityCreator {
                 .noneMatch(field -> field.isAnnotationPresent(AbilityParameter.class));
     }
 
-    private String deriveGetterName(String fieldName){
+    private String deriveGetterName(String fieldName) {
         return "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
 
     }
