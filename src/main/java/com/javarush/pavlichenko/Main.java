@@ -1,32 +1,35 @@
 package com.javarush.pavlichenko;
 
+import com.javarush.pavlichenko.entities.concrete.TestPrey;
+import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
-import com.javarush.pavlichenko.helpers.TestIslandPopulator;
-import com.javarush.pavlichenko.helpers.IslandPopulator;
+import com.javarush.pavlichenko.entities.island.IslandIterator;
+import com.javarush.pavlichenko.entities.islandentitycreator.IslandEntityCreator;
+import com.javarush.pavlichenko.exceptions.CellIsFilledException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-import java.util.concurrent.*;
 @Slf4j
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         log.info("<<<<<<<<<<< START >>>>>>>>>>>>");
-        Island island = new Island(5, 5);
 
-        IslandPopulator islandPopulator = new TestIslandPopulator(island);
-        islandPopulator.populateIsland();
-        System.out.println("AFTER POPULATION");
-        System.out.println(island);
-        System.out.println("\n\n");
+        Island island = new Island(3, 4);
+        //IslandPopulator islandPopulator = new TestIslandPopulator(island);
+        //islandPopulator.populateIsland();
+        IslandEntityCreator islandEntityCreator = new IslandEntityCreator(island);
+        try {
+            islandEntityCreator.create(TestPrey.class, new Coordinate(0, 0));
+        } catch (CellIsFilledException e) {
+            throw new RuntimeException(e);
+        }
 
 
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        List<Future<Boolean>> futures = executor.invokeAll(island.getAllEntities());
-        executor.shutdown();
+        IslandIterator islandIterator = new IslandIterator(island);
 
-        System.out.println("AFTER ONE STEP");
-        System.out.println(island);
-        System.out.println("\n\n");
+        for (int i = 0; i < 10; i++) {
+            islandIterator.step();
+        }
 
+        islandIterator.stop();
     }
 }

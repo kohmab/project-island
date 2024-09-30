@@ -1,13 +1,14 @@
 package com.javarush.pavlichenko.helpers;
 
-import com.javarush.pavlichenko.entities.creatures.TestAnimal;
+import com.javarush.pavlichenko.entities.concrete.TestAnimal;
+import com.javarush.pavlichenko.entities.concrete.TestPlant;
+import com.javarush.pavlichenko.entities.concrete.TestPrey;
 import com.javarush.pavlichenko.entities.island.Cell;
 import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
-import com.javarush.pavlichenko.enums.Gender;
 import com.javarush.pavlichenko.exceptions.CellIsFilledException;
 import com.javarush.pavlichenko.exceptions.NoAvailiableCellsException;
-import com.javarush.pavlichenko.interfaces.IslandEntity;
+import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,13 +16,13 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.Objects.isNull;
-
 @Slf4j
 @RequiredArgsConstructor
 
 public class TestIslandPopulator implements IslandPopulator {
-    private static final int MAX_ANIMALS = 30;
+    private static final int MAX_ANIMALS = 1;
+    private static final int MAX_PREYS = 1;
+    private static final int MAX_PLANTS = 1;
 
     private final Island island;
 
@@ -34,7 +35,6 @@ public class TestIslandPopulator implements IslandPopulator {
         availiableCoordinates = new HashSet<>(island.getMap().keySet());
 
         for (int i = 0; i < MAX_ANIMALS; i++) {
-            Gender sex = Gender.values()[(int) (Math.random() * Gender.values().length)];
             Coordinate coordinate;
             try {
                 coordinate = getRandomCoordinate();
@@ -42,10 +42,46 @@ public class TestIslandPopulator implements IslandPopulator {
                 log.error("No available cells for creating animal");
                 return;
             }
-            TestAnimal testAnimal = new TestAnimal(sex, island, coordinate);
+            TestAnimal testAnimal = new TestAnimal(island, coordinate);
             try {
                 putEntity(testAnimal);
                 log.info("Created animal: {}", testAnimal);
+            } catch (CellIsFilledException e) {
+                log.error("Error while trying to put entity in cell", e);
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (int i = 0; i < MAX_PREYS; i++) {
+            Coordinate coordinate;
+            try {
+                coordinate = getRandomCoordinate();
+            } catch (NoAvailiableCellsException e) {
+                log.error("No available cells for creating animal");
+                return;
+            }
+            TestPrey testAnimal = new TestPrey(island, coordinate);
+            try {
+                putEntity(testAnimal);
+                log.info("Created animal: {}", testAnimal);
+            } catch (CellIsFilledException e) {
+                log.error("Error while trying to put entity in cell", e);
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (int i = 0; i < MAX_PLANTS; i++) {
+            Coordinate coordinate;
+            try {
+                coordinate = getRandomCoordinate();
+            } catch (NoAvailiableCellsException e) {
+                log.error("No available cells for creating animal");
+                return;
+            }
+            TestPlant testAnimal = new TestPlant(island, coordinate);
+            try {
+                putEntity(testAnimal);
+                log.info("Created plant: {}", testAnimal);
             } catch (CellIsFilledException e) {
                 log.error("Error while trying to put entity in cell", e);
                 throw new RuntimeException(e);
@@ -57,7 +93,7 @@ public class TestIslandPopulator implements IslandPopulator {
         Coordinate coordinate = entity.getCoordinate();
         Cell cell = island.getCell(coordinate);
         cell.put(entity);
-        if (cell.isFilled()) {
+        if (cell.isFilledFor(entity)) {
             availiableCoordinates.remove(coordinate);
         }
 

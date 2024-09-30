@@ -1,6 +1,6 @@
 package com.javarush.pavlichenko.entities.island;
 
-import com.javarush.pavlichenko.interfaces.IslandEntity;
+import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import lombok.Getter;
 
 import java.util.Map;
@@ -23,12 +23,8 @@ public class Island {
     }
 
     public Set<IslandEntity> getAllEntities() {
-        // TODO thread Safety
         Set<IslandEntity> entities = ConcurrentHashMap.newKeySet();
-        for (Cell cell : map.values()) {
-            entities.addAll(cell.getEntities());
-
-        }
+        map.values().forEach((cell -> entities.addAll(cell.getAllEntities())));
         return entities;
     }
 
@@ -36,16 +32,9 @@ public class Island {
         return map.get(coordinate);
     }
 
-    public boolean isForbiddenCoordinate(Coordinate coordinate) {
-        int x = coordinate.getX();
-        int y = coordinate.getY();
-        boolean outOfBounds = x >= this.width || y >= this.height || x < 0 || y < 0;
-        if (outOfBounds)
-            return true;
 
-//        boolean cellIsFilled = map.get(coordinate).isFilled();
-//        return cellIsFilled;
-        return false;
+    public boolean isForbiddenCoordinate(Coordinate coordinate) {
+        return !map.containsKey(coordinate);
     }
 
     public void refresh() {
@@ -74,7 +63,7 @@ public class Island {
             stringBuilder.append(String.join(" ", row)).append("\n");
         }
         map.entrySet().stream()
-                .filter((entry) -> !entry.getValue().getEntities().isEmpty())
+                .filter((entry) -> !entry.getValue().getEntitiesMap().isEmpty())
                 .forEach(
                         (entry) -> stringBuilder.append(entry.getKey())
                                 .append(" : ")

@@ -1,0 +1,26 @@
+hunger:
+  maxSatiety: 100
+  satiety : 100
+  hungryRate : 10
+
+movement:
+  speed : 1000
+
+multiplication:
+  pregnancyDelay : 10
+
+prey:
+  foodAmount: 100
+
+#growth:
+#  maxWeight: 100
+#  initialWeight: 20
+#  growthRate: 1
+#
+#hunt:
+#  possiblePreys:
+#    - preyClass: "com.javarush.pavlichenko.entities.concrete.TestPrey"
+#      catchProbability: 0.5
+#    - preyClass: "com.javarush.pavlichenko.entities.concrete.TestChild"
+#      catchProbability: 0.7
+
