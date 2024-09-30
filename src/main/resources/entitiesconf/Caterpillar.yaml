@@ -1,16 +1,16 @@
 hunger:
-  maxSatiety: 100
-  satiety : 100
-  hungryRate : 10
+  maxSatiety: 0.0001
+  satiety : 0.0001
+  hungryRate : 0.00001
 
 movement:
-  speed : 10
+  speed : 1
 
 multiplication:
-  pregnancyDelay : 10
+  pregnancyDelay : 0
 
 prey:
-  foodAmount: 100
+  foodAmount: 0.01
 
 #growth:
 #  maxWeight: 100

@@ -1,6 +1,6 @@
 package com.javarush.pavlichenko;
 
-import com.javarush.pavlichenko.entities.concrete.TestPrey;
+import com.javarush.pavlichenko.entities.concrete.Duck;
 import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
 import com.javarush.pavlichenko.entities.island.IslandIterator;
@@ -18,7 +18,7 @@ public class Main {
         IslandEntityCreator.init(island);
         IslandEntityCreator islandEntityCreator = IslandEntityCreator.getInstance();
         try {
-            islandEntityCreator.create(TestPrey.class, new Coordinate(0, 0));
+            islandEntityCreator.create(Duck.class, new Coordinate(0, 0));
         } catch (CellIsFilledException e) {
             throw new RuntimeException(e);
         }

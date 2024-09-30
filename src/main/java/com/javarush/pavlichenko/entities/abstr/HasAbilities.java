@@ -12,4 +12,5 @@ public interface HasAbilities {
     void addAbility(Ability ability);
 
     Set<AbilityKey> getAllAbilityKeys();
+
 }

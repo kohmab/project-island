@@ -75,6 +75,11 @@ public abstract class SomeIslandEntity implements IslandEntity {
         return abilities.keySet();
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "{"+ id+"}";
+    }
+
     private IslandEntity performLifeCycle() {
         for (Ability ability : abilities.values()) {
             if (this.isDead()) {

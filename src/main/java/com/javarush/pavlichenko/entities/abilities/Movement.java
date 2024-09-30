@@ -29,7 +29,13 @@ public class Movement implements Ability {
     @Override
     public void apply() {
         Coordinate currentCoordinate = creature.getCoordinate();
+        log.debug("{} starts movement from {}.", creature, currentCoordinate);
         Coordinate newCoordinate = getNewCoordinate(currentCoordinate);
+        if (newCoordinate.equals(currentCoordinate)) {
+            log.debug("{} changed its mind about moving", creature);
+            return;
+        }
+
         Cell nextCell = creature.getIsland().getCell(newCoordinate);
         try {
             log.debug("Trying to move {} to {}", creature, newCoordinate);

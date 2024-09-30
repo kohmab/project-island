@@ -71,7 +71,8 @@ public class Multiplication implements Ability {
         pregnancyStage = 0;
         try {
             log.debug("{} trying to give birth", animal);
-            IslandEntity child = IslandEntityCreator.getInstance().create(animal.getClass(), animal.getCoordinate());
+            IslandEntity child = IslandEntityCreator.getInstance()
+                    .create(animal.getClass(), animal.getCoordinate());
             log.debug("{} give birth for {}", animal, child);
         } catch (CellIsFilledException e) {
             log.debug("{} could not give birth. Cell is filled", animal);
