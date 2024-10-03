@@ -26,7 +26,7 @@ public class Growth implements Ability {
     @Override
     public void apply() {
             weight = Math.min(maxWeight, weight + growthRate);
-            log.debug("{} grow (weight is {} of {}).", growable, weight, maxWeight);
+            log.info("{} grew (weight is {} of {}).", growable, weight, maxWeight);
 
     }
 

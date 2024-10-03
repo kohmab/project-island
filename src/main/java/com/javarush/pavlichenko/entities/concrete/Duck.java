@@ -8,8 +8,8 @@ import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
 
 public class Duck extends SomeHerbivore implements CanHunt {
-    
-    public Duck(Island island, Coordinate coordinate) {
+
+    protected Duck(Island island, Coordinate coordinate) {
         super(island, coordinate);
         Hunt hunt = new Hunt(this);
         this.addAbility(hunt);

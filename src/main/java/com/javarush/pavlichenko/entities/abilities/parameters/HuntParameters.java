@@ -1,6 +1,6 @@
 package com.javarush.pavlichenko.entities.abilities.parameters;
 
-import com.javarush.pavlichenko.entities.abilities.hunt.PossiblePrey;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.PossiblePrey;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

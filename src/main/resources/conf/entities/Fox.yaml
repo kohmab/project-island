@@ -1,0 +1,26 @@
+hunger:
+  maxSatiety: 2
+  satiety : 2
+  hungryRate : 0.04
+
+movement:
+  speed : 4
+
+multiplication:
+  reproductiveAge: 4
+  pregnancyDelay : 3
+  broodSize: 3
+
+prey:
+  foodAmount: 8
+
+hunt:
+  possiblePreys:
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Rabbit"
+      catchProbability: 0.70
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Mice"
+      catchProbability: 0.90
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Caterpillar"
+      catchProbability: 0.40
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Duck"
+      catchProbability: 0.60

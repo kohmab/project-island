@@ -27,21 +27,21 @@ public class EatingPlants implements Ability {
 
     @Override
     public void apply() {
-        if (!hunger.isHungry()) {
-            log.debug("{} is not hungry", herbivore);
+        log.info("{} started eating plants.", herbivore);
+        if (hunger.isNotHungry()) {
+            log.info("But {} was not hungry.", herbivore);
             return;
         }
-        log.debug("{} starts eating plants.", herbivore);
         CanBeEaten plant = findPlant();
         if (isNull(plant)) {
-            log.debug("{} did not find any plants", herbivore);
+            log.info("But {} did not find any plants.", herbivore);
             return;
         }
         synchronized (plant.getLock()) {
             Double desirableBiteSize = hunger.getMaxSatiety() - hunger.getSatiety();
             Edible edible = (Edible) plant.getAbility(AbilityKey.getKeyForClass(Edible.class));
             Double realBiteSize = edible.getBite(desirableBiteSize);
-            log.debug("{} bit off amount of {} from the {}", herbivore, realBiteSize, plant);
+            log.info("{} bit off amount of {} from the {}.", herbivore, realBiteSize, plant);
             hunger.addSatiety(realBiteSize);
 
         }

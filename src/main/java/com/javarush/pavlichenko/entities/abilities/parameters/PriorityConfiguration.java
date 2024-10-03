@@ -12,11 +12,12 @@ public class PriorityConfiguration {
     @Getter
     private final static Map<Class<? extends Ability>, AbilityPriority> priorities =
             Map.of(
-                    Hunger.class, AbilityPriority.MAX,
-                    Growth.class, AbilityPriority.MAX,
-                    Hunt.class, AbilityPriority.HIGH,
-                    EatingPlants.class, AbilityPriority.HIGH,
-                    Multiplication.class, AbilityPriority.HIGH,
+                    Aiging.class, AbilityPriority.MAX,
+                    Hunger.class, AbilityPriority.HIGH,
+                    Growth.class, AbilityPriority.HIGH,
+                    Hunt.class, AbilityPriority.MEDIUM,
+                    EatingPlants.class, AbilityPriority.MEDIUM,
+                    Multiplication.class, AbilityPriority.MEDIUM,
                     Movement.class, AbilityPriority.LOW,
                     Prey.class, AbilityPriority.PASSIVE_ABILITY,
                     Edible.class, AbilityPriority.PASSIVE_ABILITY

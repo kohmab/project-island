@@ -3,8 +3,6 @@ package com.javarush.pavlichenko.enums;
 import com.javarush.pavlichenko.entities.island.Coordinate;
 import lombok.Getter;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 @Getter
 public enum Direction {
     LEFT(-1, 0),
@@ -18,10 +16,4 @@ public enum Direction {
         this.direction = new Coordinate(xDir, yDir);
     }
 
-    public static Direction getRandom() {
-        {
-            int choice = ThreadLocalRandom.current().nextInt(Direction.values().length);
-            return Direction.values()[choice];
-        }
-    }
 }

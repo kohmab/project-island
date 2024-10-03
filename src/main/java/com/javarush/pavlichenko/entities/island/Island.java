@@ -1,6 +1,7 @@
 package com.javarush.pavlichenko.entities.island;
 
 import com.javarush.pavlichenko.entities.abstr.IslandEntity;
+import com.javarush.pavlichenko.exceptions.ImpossibleCoordinateException;
 import lombok.Getter;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ public class Island {
     public Island(Integer height, Integer width) {
         this.height = height;
         this.width = width;
-        refresh();
+        clear();
     }
 
     public Set<IslandEntity> getAllEntities() {
@@ -29,19 +30,21 @@ public class Island {
     }
 
     public Cell getCell(Coordinate coordinate) {
+        if (!isPossibleCoordinate(coordinate))
+            throw new ImpossibleCoordinateException(String.format("Trying get cell at impossible coordinate %s", coordinate));
         return map.get(coordinate);
     }
 
 
-    public boolean isForbiddenCoordinate(Coordinate coordinate) {
-        return !map.containsKey(coordinate);
+    public boolean isPossibleCoordinate(Coordinate coordinate) {
+        return map.containsKey(coordinate);
     }
 
-    public void refresh() {
+    public void clear() {
         this.map = new ConcurrentHashMap<>();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                map.put(new Coordinate(i, j), new Cell(2)); // @TODO: add capacity according to the game rules
+                map.put(new Coordinate(i, j), new Cell());
             }
         }
     }

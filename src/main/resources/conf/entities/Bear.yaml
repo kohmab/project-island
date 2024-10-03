@@ -1,0 +1,35 @@
+hunger:
+  maxSatiety: 80
+  satiety: 80
+  hungryRate: 4
+
+movement:
+  speed: 2
+
+multiplication:
+  reproductiveAge: 10
+  pregnancyDelay: 6
+  broodSize: 1
+
+hunt:
+  possiblePreys:
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Boa"
+      catchProbability: 0.80
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Horse"
+      catchProbability: 0.10
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Deer"
+      catchProbability: 0.80
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Rabbit"
+      catchProbability: 0.80
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Mice"
+      catchProbability: 0.90
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Sheep"
+      catchProbability: 0.70
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Goat"
+      catchProbability: 0.70
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Boar"
+      catchProbability: 0.50
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Buffalo"
+      catchProbability: 0.20
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Duck"
+      catchProbability: 0.10

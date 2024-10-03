@@ -8,9 +8,7 @@ import com.javarush.pavlichenko.entities.abstr.entitiesmarkers.Herbivore;
 
 public abstract class SomeHerbivore extends SomeAnimal implements Herbivore {
 
-    private Double foodAmount;
-
-    public SomeHerbivore(Island island, Coordinate coordinate) {
+    protected SomeHerbivore(Island island, Coordinate coordinate) {
         super(island, coordinate);
 
         EatingPlants eatingPlants = new EatingPlants(this);
@@ -19,9 +17,4 @@ public abstract class SomeHerbivore extends SomeAnimal implements Herbivore {
         Prey prey = new Prey(this);
         this.addAbility(prey);
     }
-
-//    @Override
-//    public Double getFoodAmount() {
-//        return foodAmount;
-//    }
 }

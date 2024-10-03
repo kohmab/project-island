@@ -1,0 +1,20 @@
+hunger:
+  maxSatiety: 0.01
+  satiety : 0.01
+  hungryRate : 0.002
+
+movement:
+  speed : 1
+
+multiplication:
+  reproductiveAge: 2
+  pregnancyDelay : 1
+  broodSize: 5
+
+prey:
+  foodAmount: 0.05
+
+hunt:
+  possiblePreys:
+    - preyClass: "com.javarush.pavlichenko.entities.concrete.Caterpillar"
+      catchProbability: 0.9

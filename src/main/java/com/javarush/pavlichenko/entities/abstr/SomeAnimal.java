@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public abstract class SomeAnimal extends SomeIslandEntity implements Animal {
 
-    public SomeAnimal(Island island, Coordinate coordinate) {
+    protected SomeAnimal(Island island, Coordinate coordinate) {
         super(island, coordinate);
 
         Movement movement = new Movement(this);

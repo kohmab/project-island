@@ -19,7 +19,7 @@ public class Edible implements Ability {
         double amount = Math.min(biteSize, weight);
         weight -= amount;
         if (weight <= 0.) {
-            log.debug("{} was completely eaten.", canBeEaten);
+            log.info("{} was completely eaten.", canBeEaten);
             canBeEaten.die();
         }
         growth.setWeight(weight);

@@ -6,7 +6,7 @@ import com.javarush.pavlichenko.entities.island.Island;
 
 public class Horse extends SomeHerbivore {
 
-    public Horse(Island island, Coordinate coordinate) {
+    protected Horse(Island island, Coordinate coordinate) {
         super(island, coordinate);
     }
 }

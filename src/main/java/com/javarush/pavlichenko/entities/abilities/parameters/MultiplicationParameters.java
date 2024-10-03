@@ -9,5 +9,7 @@ import lombok.ToString;
 @ToString
 public class MultiplicationParameters implements AbilityParameters {
     private Integer pregnancyDelay;
+    private Integer broodSize;
+    private Integer reproductiveAge;
 
 }

@@ -1,6 +1,6 @@
 package com.javarush.pavlichenko.entities.abilities;
 
-import com.javarush.pavlichenko.entities.abilities.hunt.PossiblePrey;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.PossiblePrey;
 import com.javarush.pavlichenko.entities.island.Cell;
 import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.abilities.parameters.AbilityParameter;
@@ -33,41 +33,40 @@ public class Hunt implements Ability {
         this.key = AbilityKey.getKeyFor(this);
         this.hunger = (Hunger) predator.getAbility(AbilityKey.getKeyForClass(Hunger.class));
 
-        // TODO move to another place;
-        // Collections.sort(this.possiblePreys);
     }
 
     @Override
     public void apply() {
-        if (!hunger.isHungry()) {
-            log.debug("Predator {} is full.", predator);
+        log.info("{} started hunt.", predator);
+
+        if (hunger.isNotHungry()) {
+            log.info("But {} is full.", predator);
             return;
         }
 
-        log.debug("{} starts hunt.", predator);
 
         CanBeCached prey = findPrey();
         if (isNull(prey)) {
-            log.debug("{} did not find a prey", predator);
+            log.info("But {} did not find a prey.", predator);
             return;
         }
 
         synchronized (prey.getLock()) {
-            log.debug("{} found a prey: {}.", predator, prey);
+            log.info("{} found a prey: {}.", predator, prey);
 
 
             if (isHuntFailed()) {
-                log.debug("Hunt failed. {} has missed.", predator);
+                log.info("But {} failed (miss). ", predator);
                 return;
             }
 
             if (isPreyRunAway(prey)) {
-                log.debug("Hunt failed. {} run away from {}.", prey, predator);
+                log.info("But {} missed the prey {}.", predator, prey);
                 return;
             }
 
             if (prey.isDead()) {
-                log.debug("{}'s prey ({}) already dead.", predator, prey);
+                log.info("But {}'s prey ({}) was already dead.", predator, prey);
                 return;
             }
             prey.die();
@@ -75,7 +74,8 @@ public class Hunt implements Ability {
             Prey preyAbility = (Prey) (prey.getAbility(AbilityKey.getKeyForClass(Prey.class)));
             Double preyAmount = preyAbility.getFoodAmount();
 
-            log.debug("{} killed {}.", predator, prey);
+            log.info("{} killed {}.", predator, prey);
+            log.info("{} was killed by {}.", prey, predator);
             hunger.addSatiety(preyAmount);
         }
     }

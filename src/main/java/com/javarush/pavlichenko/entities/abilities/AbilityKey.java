@@ -7,10 +7,8 @@ import static java.util.Objects.isNull;
 
 public class AbilityKey implements Comparable<AbilityKey> {
 
-
     private final Class<? extends Ability> clazz;
     private final AbilityPriority priority;
-
 
     public static AbilityKey getKeyFor(Ability ability) {
         return getKeyForClass(ability.getClass());
@@ -20,10 +18,6 @@ public class AbilityKey implements Comparable<AbilityKey> {
         return new AbilityKey(clazz, PriorityConfiguration.getPriorities().get(clazz));
     }
 
-    private AbilityKey(Class<? extends Ability> clazz, AbilityPriority priority) {
-        this.clazz = clazz;
-        this.priority = priority;
-    }
 
     @Override
     public int compareTo(AbilityKey o) {
@@ -43,5 +37,10 @@ public class AbilityKey implements Comparable<AbilityKey> {
             return false;
         }
         return other.clazz.equals(this.clazz);
+    }
+
+    private AbilityKey(Class<? extends Ability> clazz, AbilityPriority priority) {
+        this.clazz = clazz;
+        this.priority = priority;
     }
 }

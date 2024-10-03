@@ -1,0 +1,6 @@
+
+growth:
+  maxWeight: 10000
+  weight: 50
+  growthRate: 25
+

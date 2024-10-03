@@ -31,20 +31,20 @@ public class Hunger implements Ability {
 
         if (satiety <= 0.) {
             creature.die();
-            log.info("{} died of hunger", creature);
+            log.info("{} died of hunger.", creature);
             return;
         }
-        log.debug("{} get hungry (satiety is {} of {}).", creature, satiety, maxSatiety);
+        log.info("{} got hungry (satiety is {} of {}).", creature, satiety, maxSatiety);
 
     }
 
-    public boolean isHungry() {
-        return satiety < maxSatiety;
+    public boolean isNotHungry() {
+        return satiety >= maxSatiety;
     }
 
     public void addSatiety(Double foodAmount) {
         satiety = Math.min(maxSatiety, satiety + foodAmount);
-        log.debug("{} ate (satiety is {} of {}).", creature, satiety, maxSatiety);
+        log.info("{} ate (satiety is {} of {}).", creature, satiety, maxSatiety);
     }
 
 }

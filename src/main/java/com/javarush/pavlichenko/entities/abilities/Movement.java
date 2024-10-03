@@ -9,6 +9,10 @@ import com.javarush.pavlichenko.enums.Direction;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -19,7 +23,7 @@ public class Movement implements Ability {
     private final AbilityKey key;
 
     @AbilityParameter
-    private Integer speed; //TODO speed feat
+    private Integer speed;
 
     public Movement(CanMove creature) {
         this.creature = creature;
@@ -29,19 +33,20 @@ public class Movement implements Ability {
     @Override
     public void apply() {
         Coordinate currentCoordinate = creature.getCoordinate();
-        log.debug("{} starts movement from {}.", creature, currentCoordinate);
+        log.info("{} started movement from {}.", creature, currentCoordinate);
         Coordinate newCoordinate = getNewCoordinate(currentCoordinate);
+
         if (newCoordinate.equals(currentCoordinate)) {
-            log.debug("{} changed its mind about moving", creature);
+            log.info("But {} changed its mind about moving.", creature);
             return;
         }
 
         Cell nextCell = creature.getIsland().getCell(newCoordinate);
         try {
-            log.debug("Trying to move {} to {}", creature, newCoordinate);
+            log.info("{} tried to move to {}.", creature, newCoordinate);
             nextCell.put(creature);
         } catch (CellIsFilledException e) {
-            log.debug("Can not move {} to {}. Cell is filled", creature, newCoordinate);
+            log.info("But {} could not move to {}. Cell was filled.", creature, newCoordinate);
             return;
         }
 
@@ -49,18 +54,25 @@ public class Movement implements Ability {
         if (nonNull(currentCell))
             currentCell.extract(creature);
         creature.setCoordinate(newCoordinate);
-        log.debug("{} moved to {}", creature, newCoordinate);
+        log.info("{} moved to {}.", creature, newCoordinate);
 
     }
 
     private Coordinate getNewCoordinate(Coordinate current) {
         Coordinate newCoordinate = current;
         for (int i = 0; i < speed; i++) {
-            do {
-                newCoordinate = newCoordinate.add(Direction.getRandom().getDirection());
-            } while (creature.getIsland().isForbiddenCoordinate(newCoordinate));
+            newCoordinate = randomOneStep(newCoordinate);
         }
         return newCoordinate;
+    }
+
+    private Coordinate randomOneStep(Coordinate coordinate) {
+        List<Coordinate> possibleNewCoordinates = Arrays.stream(Direction.values())
+                .map(direction -> direction.getDirection().add(coordinate))
+                .filter(creature.getIsland()::isPossibleCoordinate)
+                .toList();
+        int randomIndex = ThreadLocalRandom.current().nextInt(possibleNewCoordinates.size());
+        return possibleNewCoordinates.get(randomIndex);
     }
 
 

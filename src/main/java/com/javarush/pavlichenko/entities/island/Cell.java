@@ -1,5 +1,6 @@
 package com.javarush.pavlichenko.entities.island;
 
+import com.javarush.pavlichenko.entities.island.parameters.CellCapacity;
 import com.javarush.pavlichenko.exceptions.CellIsFilledException;
 import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import lombok.Getter;
@@ -21,13 +22,13 @@ import static java.util.Objects.nonNull;
 @Getter
 public class Cell {
 
-    private final Integer capacity;
     private final Map<Class<? extends IslandEntity>, List<IslandEntity>> entitiesMap = new ConcurrentHashMap<>();
-// TODO  private final Map<Class<? extends IslandEntity>,Integer> maxCapacityMap;
+
+    private final Map<Class<? extends IslandEntity>, Integer> capacityMap = CellCapacity.getCapacityMap();
 
     public boolean isFilledFor(IslandEntity entity) {
         List<IslandEntity> entitiesList = getListFor(entity);
-        return entitiesList.size() >= capacity;
+        return entitiesList.size() >= capacityMap.get(entity.getClass());
     }
 
     public List<IslandEntity> getListFor(IslandEntity entity) {
@@ -55,7 +56,7 @@ public class Cell {
 
     public void put(IslandEntity entity) throws CellIsFilledException {
         if (isFilledFor(entity)) {
-            log.info(String.format(TEMPLATE_CELL_IS_FILLED, entity, this));
+            log.debug(String.format(TEMPLATE_CELL_IS_FILLED, entity, this));
             throw new CellIsFilledException();
         }
         List<IslandEntity> entityList = getListFor(entity);
@@ -80,12 +81,6 @@ public class Cell {
         return count.get();
     }
 
-    @Override
-    public String toString() {
-        return "Cell{" +
-                "entities=" + entitiesMap +
-                '}';
-    }
 
     private static final String TEMPLATE_CELL_IS_FILLED =
             """

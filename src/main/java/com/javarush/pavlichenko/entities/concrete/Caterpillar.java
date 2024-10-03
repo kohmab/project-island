@@ -11,7 +11,7 @@ import com.javarush.pavlichenko.entities.island.Island;
 
 public class Caterpillar extends SomeHerbivore {
 
-    public Caterpillar(Island island, Coordinate coordinate) {
+    protected Caterpillar(Island island, Coordinate coordinate) {
         super(island, coordinate);
 
     }
