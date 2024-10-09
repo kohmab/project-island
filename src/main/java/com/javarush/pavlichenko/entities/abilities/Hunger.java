@@ -1,15 +1,13 @@
 package com.javarush.pavlichenko.entities.abilities;
 
-import com.javarush.pavlichenko.entities.abilities.parameters.AbilityParameter;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityParameter;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanBeHungry;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Slf4j
-public class Hunger implements Ability {
-    private final CanBeHungry creature;
-    private final AbilityKey key;
+public class Hunger extends SomeAbility {
 
     @AbilityParameter
     private Double maxSatiety; // TODO set according game rules
@@ -21,8 +19,7 @@ public class Hunger implements Ability {
     private Double satiety;
 
     public Hunger(CanBeHungry creature) {
-        this.creature = creature;
-        this.key = AbilityKey.getKeyFor(this);
+        super(creature, Hunger.class);
     }
 
     @Override
@@ -30,21 +27,21 @@ public class Hunger implements Ability {
         satiety -= hungryRate;
 
         if (satiety <= 0.) {
-            creature.die();
-            log.info("{} died of hunger.", creature);
+            owner.die();
+            log.info(marker, "{} died of hunger.", owner);
             return;
         }
-        log.info("{} got hungry (satiety is {} of {}).", creature, satiety, maxSatiety);
+        log.info(marker, "{} got hungry (satiety is {} of {}).", owner, satiety, maxSatiety);
 
     }
 
-    public boolean isNotHungry() {
+    protected boolean isNotHungry() {
         return satiety >= maxSatiety;
     }
 
-    public void addSatiety(Double foodAmount) {
+    protected void addSatiety(Double foodAmount) {
         satiety = Math.min(maxSatiety, satiety + foodAmount);
-        log.info("{} ate (satiety is {} of {}).", creature, satiety, maxSatiety);
+        log.info(marker, "{} ate (satiety is {} of {}).", owner, satiety, maxSatiety);
     }
 
 }

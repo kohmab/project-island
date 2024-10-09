@@ -5,8 +5,7 @@ import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
 
 public class Bear extends SomePredator {
-
-    protected Bear(Island island, Coordinate coordinate) {
-        super(island, coordinate);
+    protected Bear(Island island) {
+        super(island);
     }
 }

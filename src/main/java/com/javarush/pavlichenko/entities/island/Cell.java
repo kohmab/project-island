@@ -27,8 +27,12 @@ public class Cell {
     private final Map<Class<? extends IslandEntity>, Integer> capacityMap = CellCapacity.getCapacityMap();
 
     public boolean isFilledFor(IslandEntity entity) {
-        List<IslandEntity> entitiesList = getListFor(entity);
-        return entitiesList.size() >= capacityMap.get(entity.getClass());
+        return isFilledFor(entity.getClass());
+    }
+
+    public boolean isFilledFor(Class<? extends IslandEntity> aClass) {
+        List<IslandEntity> entitiesList = getListOf(aClass);
+        return entitiesList.size() >= capacityMap.get(aClass);
     }
 
     public List<IslandEntity> getListFor(IslandEntity entity) {
@@ -81,6 +85,18 @@ public class Cell {
         return count.get();
     }
 
+    public synchronized List<IslandEntity> collectAndRemoveDead() {
+        List<IslandEntity> result = new ArrayList<>();
+        for (List<IslandEntity> islandEntityList : entitiesMap.values()) {
+            islandEntityList.stream()
+                    .filter(IslandEntity::isDead)
+                    .forEach(entity -> {
+                        result.add(entity);
+                        islandEntityList.remove(entity);
+                    });
+        }
+        return result;
+    }
 
     private static final String TEMPLATE_CELL_IS_FILLED =
             """

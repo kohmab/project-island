@@ -1,4 +1,4 @@
-package com.javarush.pavlichenko.entities.abilities.parameters;
+package com.javarush.pavlichenko.entities.abilities.sideclasses;
 
 import com.javarush.pavlichenko.entities.abilities.*;
 import com.javarush.pavlichenko.enums.AbilityPriority;
@@ -20,6 +20,7 @@ public class PriorityConfiguration {
                     Multiplication.class, AbilityPriority.MEDIUM,
                     Movement.class, AbilityPriority.LOW,
                     Prey.class, AbilityPriority.PASSIVE_ABILITY,
-                    Edible.class, AbilityPriority.PASSIVE_ABILITY
+                    Edible.class, AbilityPriority.PASSIVE_ABILITY,
+                    Placement.class, AbilityPriority.PASSIVE_ABILITY
             );
 }

@@ -8,9 +8,8 @@ import com.javarush.pavlichenko.entities.island.Island;
 
 public class Mice extends SomeHerbivore implements CanHunt {
 
-    protected Mice(Island island, Coordinate coordinate) {
-        super(island, coordinate);
-        Hunt hunt = new Hunt(this);
-        this.addAbility(hunt);
+    protected Mice(Island island) {
+        super(island);
+        new Hunt(this);
     }
 }

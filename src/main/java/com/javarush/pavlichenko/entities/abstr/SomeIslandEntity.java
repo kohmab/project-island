@@ -1,49 +1,43 @@
 package com.javarush.pavlichenko.entities.abstr;
 
-import com.javarush.pavlichenko.entities.abilities.AbilityKey;
+import com.javarush.pavlichenko.entities.abilities.Placement;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
 import com.javarush.pavlichenko.entities.abilities.Aiging;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanAge;
-import com.javarush.pavlichenko.entities.island.Coordinate;
+import com.javarush.pavlichenko.entities.abstr.abilitymarkers.HasPlace;
 import com.javarush.pavlichenko.entities.island.Island;
 import com.javarush.pavlichenko.entities.abilities.Ability;
 
+import com.javarush.pavlichenko.enums.AbilityPriority;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
-@NoArgsConstructor(force = true)
 @Getter
 @Slf4j
-public abstract class SomeIslandEntity implements IslandEntity, CanAge {
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+public abstract class SomeIslandEntity implements IslandEntity, CanAge, HasPlace {
 
     private final UUID id;
     private final Object lock;
 
     private Boolean isDead = false;
 
-    @Setter
-    private Island island;
-
-    @Setter
-    protected Coordinate coordinate;
+    private final Island island;
 
     private final Map<AbilityKey, Ability> abilities = new TreeMap<>();
 
     // All entities must be created by IslandEntityCreator
-    protected SomeIslandEntity(Island island, Coordinate coordinate) {
+    protected SomeIslandEntity(Island island) {
 
         this.id = UUID.randomUUID();
         this.lock = new Object();
-
-        this.isDead = false;
         this.island = island;
-        this.coordinate = coordinate;
 
-        Aiging aiging = new Aiging(this);
-        this.addAbility(aiging);
+        new Placement(this);
+        new Aiging(this);
     }
 
     @Override
@@ -59,7 +53,6 @@ public abstract class SomeIslandEntity implements IslandEntity, CanAge {
 
             this.isDead = true;
             log.debug("{} died.", this);
-            island.getCell(coordinate).extract(this);
         }
     }
 
@@ -85,7 +78,7 @@ public abstract class SomeIslandEntity implements IslandEntity, CanAge {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "{"+ id+"}";
+        return this.getClass().getSimpleName() + "{" + id + "}";
     }
 
     private IslandEntity performLifeCycle() {
@@ -94,6 +87,12 @@ public abstract class SomeIslandEntity implements IslandEntity, CanAge {
             if (this.isDead()) {
                 break;
             }
+
+            AbilityPriority priority = AbilityKey.getKeyFor(ability).getPriority();
+            if (AbilityPriority.PASSIVE_ABILITY.equals(priority)) {
+                continue;
+            }
+
             synchronized (this.getLock()) {
                 ability.apply();
             }

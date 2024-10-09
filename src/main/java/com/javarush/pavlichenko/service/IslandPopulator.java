@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+import static com.javarush.pavlichenko.helpers.Helpers.getRandom;
+
 @Slf4j
 
 public class IslandPopulator {
@@ -18,58 +20,37 @@ public class IslandPopulator {
 
     private final IslandEntityCreator entityCreator = IslandEntityCreator.getInstance();
 
-    private final Map<Class<? extends IslandEntity>, Integer> capacityMap =
-            CellCapacity.getCapacityMap();
-
-    private Map<Class<? extends IslandEntity>, Set<Coordinate>> availableCoordinates;
-
-    private final Map<Class<? extends IslandEntity>, Integer> entitiesToBeCreatedCount =
-            GameSettings.get().getInitialCreaturesCount();
-
     public IslandPopulator(Island island) {
         this.island = island;
     }
 
-    public void populate() {
+    public synchronized void populate() {
         island.clear();
-        reset();
 
-        for (Map.Entry<Class<? extends IslandEntity>, Integer> entry : entitiesToBeCreatedCount.entrySet()) {
+        Map<Class<? extends IslandEntity>, Integer> targetCountMap = GameSettings.get().getInitialCreaturesCount();
+        Map<Class<? extends IslandEntity>, Integer> cellCapacityMap = CellCapacity.getCapacityMap();
+
+        for (Map.Entry<Class<? extends IslandEntity>, Integer> entry : targetCountMap.entrySet()) {
             Class<? extends IslandEntity> entityClass = entry.getKey();
-            Integer count = entry.getValue();
-            try {
-                for (int i = 0; i < count; i++) {
-                    Coordinate coordinate = getRandomCoordinateFor(entityClass);
+            Integer targetCount = entry.getValue();
 
+            Set<Coordinate> avaliableCoordinate = new HashSet<>(island.getMap().keySet());
+
+            try {
+                for (int i = 0; i < targetCount; i++) {
+                    Coordinate coordinate = getRandom(avaliableCoordinate);
                     entityCreator.create(entityClass, coordinate);
+
+                    if (island.getMap().get(coordinate).isFilledFor(entityClass)){
+                        avaliableCoordinate.remove(coordinate);
+                    }
 
                 }
             } catch (CellIsFilledException e) {
                 throw new RuntimeException("Impossible to create new " + entityClass, e);
             }
         }
-    }
-
-    private void reset() {
-        availableCoordinates = new HashMap<>();
-        entitiesToBeCreatedCount.keySet()
-                .forEach(clazz -> availableCoordinates.put(clazz, island.getMap().keySet()));
-    }
-
-    private Coordinate getRandomCoordinateFor(Class<? extends IslandEntity> entityClass) {
-        Set<Coordinate> coordinates = availableCoordinates.get(entityClass);
-        Coordinate coordinate = coordinates.stream()
-                .skip(new Random().nextInt(coordinates.size()))
-                .findFirst()
-                .orElseThrow();
-
-        int currCount = island.getCell(coordinate).getListOf(entityClass).size();
-        int availCount = capacityMap.get(entityClass);
-
-        if (currCount == availCount) {
-            availableCoordinates.get(entityClass).remove(coordinate);
-        }
-        return coordinate;
+        log.debug("Island was populated");
     }
 
 

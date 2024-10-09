@@ -6,8 +6,9 @@ import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
 
 public class Eagle extends SomePredator {
+    protected Eagle(Island island) {
+        super(island);
 
-    protected Eagle(Island island, Coordinate coordinate) {
-        super(island, coordinate);
     }
+
 }

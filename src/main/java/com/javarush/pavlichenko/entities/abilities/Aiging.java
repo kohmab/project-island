@@ -1,29 +1,28 @@
 package com.javarush.pavlichenko.entities.abilities;
 
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
+import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanAge;
-import com.javarush.pavlichenko.entities.abstr.entitiesmarkers.Herbivore;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Aiging implements Ability {
-
-    private final CanAge entity;
-    private final AbilityKey key;
+public class Aiging extends SomeAbility {
 
     @Getter
     private Integer age = 0;
+
     public Aiging(CanAge canAge) {
-        this.entity = canAge;
-        this.key = AbilityKey.getKeyFor(this);
+        super(canAge, Aiging.class);
     }
 
     @Override
     public void apply() {
-        if (age++ == 0){
-            log.info("{} was born.", entity);
+        if (age++ == 0) {
+            log.info(marker, "{} was born.", owner);
         } else {
-            log.info("{} was aged. Age: {}.", entity, age);
+            log.info(marker, "{} was aged. Age: {}.", owner, age);
         }
     }
+
 }

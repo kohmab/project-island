@@ -1,20 +1,20 @@
-hunger:
+Hunger:
   maxSatiety: 3
   satiety : 3
   hungryRate : 0.02
 
-movement:
+Movement:
   speed : 1
 
-multiplication:
+Multiplication:
   reproductiveAge: 3
   pregnancyDelay : 2
   broodSize: 3
 
-prey:
+Prey:
   foodAmount: 15
 
-hunt:
+Hunt:
   possiblePreys:
     - preyClass: "com.javarush.pavlichenko.entities.concrete.Fox"
       catchProbability: 0.15

@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d [%t] %-5p %class{0} \n\t %m%n"/>
-        </Console>
-        <IslandHistory name="History">
-            <PatternLayout pattern="%d [%t] %-5p %class{0} \n\t %m%n"/>
-        </IslandHistory>
+        <EntityDiary name="Diary">
+            <MarkerFilter marker="BIOGRAPHY"/>
+        </EntityDiary>
         <File name="File" fileName="logs/app.log">
             <PatternLayout pattern="%d [%t] %-5p %class{0} \n\t %m%n"/>
         </File>
     </Appenders>
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="History"/>
+            <AppenderRef ref="Diary"/>
         </Root>
     </Loggers>
 </Configuration>

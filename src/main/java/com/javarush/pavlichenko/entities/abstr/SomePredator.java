@@ -6,9 +6,9 @@ import com.javarush.pavlichenko.entities.island.Island;
 import com.javarush.pavlichenko.entities.abstr.entitiesmarkers.Predator;
 
 public abstract class SomePredator extends SomeAnimal implements Predator {
-    public SomePredator(Island island, Coordinate coordinate) {
-        super(island, coordinate);
-        Hunt hunt = new Hunt(this);
-        this.addAbility(hunt);
+    public SomePredator(Island island) {
+        super(island);
+
+        new Hunt(this);
     }
 }

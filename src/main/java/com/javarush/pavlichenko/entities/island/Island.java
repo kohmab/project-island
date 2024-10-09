@@ -4,6 +4,8 @@ import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import com.javarush.pavlichenko.exceptions.ImpossibleCoordinateException;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class Island {
     public Island(Integer height, Integer width) {
         this.height = height;
         this.width = width;
+        clear();
         clear();
     }
 
@@ -49,6 +52,13 @@ public class Island {
         }
     }
 
+    public List<IslandEntity> collectAndRemoveDead() {
+        List<IslandEntity> result = new ArrayList<>();
+        map.values().forEach(cell -> {
+            result.addAll(cell.collectAndRemoveDead());
+        });
+        return result;
+    }
 
     @Override
     public String toString() {

@@ -3,10 +3,8 @@ package com.javarush.pavlichenko.service;
 import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import com.javarush.pavlichenko.entities.island.Island;
 import com.javarush.pavlichenko.entities.island.parameters.GameSettings;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.spi.LoggerContext;
 
 import java.util.List;
 import java.util.Set;
@@ -18,14 +16,15 @@ import java.util.concurrent.Future;
 @Slf4j
 public class IslandIterator {
 
-    private final IslandHistory history = IslandHistory.getInstance();
+    private final EntityDiaryAppender history = EntityDiaryAppender.getInstance();
 
     private final Island island;
     private final ExecutorService executor;
+
+    @Getter
     private int stepNo = 0;
 
     public void step() {
-        history.clear();
         log.info("<<<<<<<\t iteration #{} started \t>>>>>>>", ++stepNo);
         Set<IslandEntity> allEntities = island.getAllEntities();
         List<Future<IslandEntity>> futures;
@@ -54,9 +53,6 @@ public class IslandIterator {
     public IslandIterator(Island island) {
         this.island = island;
         this.executor = Executors.newFixedThreadPool(GameSettings.get().getThreadsCount());
-
-
-
     }
 
 

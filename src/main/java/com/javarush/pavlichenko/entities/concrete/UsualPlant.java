@@ -5,7 +5,8 @@ import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
 
 public class UsualPlant extends SomePlant {
-    protected UsualPlant(Island island, Coordinate coordinate) {
-        super(island, coordinate);
+    protected UsualPlant(Island island) {
+        super(island);
+
     }
 }

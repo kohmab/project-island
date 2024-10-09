@@ -9,16 +9,12 @@ import com.javarush.pavlichenko.entities.abstr.entitiesmarkers.Plant;
 public abstract class SomePlant extends SomeIslandEntity implements Plant {
 
 
-    public SomePlant(Island island, Coordinate coordinate) {
-        super(island, coordinate);
+    public SomePlant(Island island) {
+        super(island);
 
-        Growth growth = new Growth(this);
-        this.addAbility(growth);
-
-        Edible edible = new Edible(this);
-        this.addAbility(edible);
-
-    }
+        new Growth(this);
+        new Edible(this);
+}
 
 //
 

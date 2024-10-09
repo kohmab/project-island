@@ -5,9 +5,9 @@ import com.javarush.pavlichenko.entities.island.Coordinate;
 import com.javarush.pavlichenko.entities.island.Island;
 
 public class Deer extends SomeHerbivore {
-
-    protected Deer(Island island, Coordinate coordinate) {
-        super(island, coordinate);
+    protected Deer(Island island) {
+        super(island);
 
     }
+
 }

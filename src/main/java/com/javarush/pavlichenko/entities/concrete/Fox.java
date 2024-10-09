@@ -8,10 +8,8 @@ import com.javarush.pavlichenko.entities.island.Island;
 
 public class Fox extends SomePredator implements CanBeCached {
 
-    protected Fox(Island island, Coordinate coordinate) {
-        super(island, coordinate);
-
-        Prey prey = new Prey(this);
-        this.addAbility(prey);
+    protected Fox(Island island) {
+        super(island);
+        new Prey(this);
     }
 }

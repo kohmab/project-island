@@ -1,22 +1,20 @@
 package com.javarush.pavlichenko.entities.abilities;
 
-import com.javarush.pavlichenko.entities.abilities.parameters.AbilityParameter;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityParameter;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanBeCached;
 import lombok.Getter;
+import lombok.Setter;
 
 
-public class Prey implements Ability {
+public class Prey extends SomeAbility {
 
-    @Getter
     @AbilityParameter
+    @Getter
     private Double foodAmount;
 
-    private final CanBeCached creature;
-    private final AbilityKey key;
-
     public Prey(CanBeCached creature) {
-        this.creature = creature;
-        this.key = AbilityKey.getKeyFor(this);
+        super(creature, Prey.class);
     }
 
     @Override

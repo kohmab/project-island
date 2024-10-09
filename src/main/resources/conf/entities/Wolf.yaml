@@ -1,17 +1,17 @@
-hunger:
+Hunger:
   maxSatiety: 8
   satiety : 8
   hungryRate : 0.3
 
-movement:
+Movement:
   speed : 3
 
-multiplication:
+Multiplication:
   reproductiveAge: 5
   pregnancyDelay : 4
   broodSize: 3
 
-hunt:
+Hunt:
   possiblePreys:
     - preyClass: "com.javarush.pavlichenko.entities.concrete.Horse"
       catchProbability: 0.1

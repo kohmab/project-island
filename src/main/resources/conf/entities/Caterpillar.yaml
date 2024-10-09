@@ -1,16 +1,16 @@
-hunger:
+Hunger:
   maxSatiety: 0.0001
   satiety : 0.0001
   hungryRate : 0.00001
 
-movement:
+Movement:
   speed : 1
 
-multiplication:
+Multiplication:
   reproductiveAge: 1
   pregnancyDelay : 1
   broodSize: 100
 
 
-prey:
+Prey:
   foodAmount: 0.01

@@ -8,10 +8,8 @@ import com.javarush.pavlichenko.entities.island.Island;
 
 public class Boa extends SomePredator implements CanBeCached {
 
-    protected Boa(Island island, Coordinate coordinate) {
-        super(island, coordinate);
-
-        Prey prey = new Prey(this);
-        this.addAbility(prey);
+    protected Boa(Island island) {
+        super(island);
+        new Prey(this);
     }
 }

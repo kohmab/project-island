@@ -9,7 +9,7 @@ initialCreaturesCount:
   "com.javarush.pavlichenko.entities.concrete.Boa": 30
   "com.javarush.pavlichenko.entities.concrete.Boar": 50
   "com.javarush.pavlichenko.entities.concrete.Buffalo": 10
-  "com.javarush.pavlichenko.entities.concrete.Caterpillar": 1000
+  "com.javarush.pavlichenko.entities.concrete.Caterpillar": 140
   "com.javarush.pavlichenko.entities.concrete.Deer": 300
   "com.javarush.pavlichenko.entities.concrete.Duck": 200
   "com.javarush.pavlichenko.entities.concrete.Eagle": 20
@@ -19,5 +19,5 @@ initialCreaturesCount:
   "com.javarush.pavlichenko.entities.concrete.Mice": 500
   "com.javarush.pavlichenko.entities.concrete.Rabbit": 150
   "com.javarush.pavlichenko.entities.concrete.Sheep": 140
-  "com.javarush.pavlichenko.entities.concrete.UsualPlant": 3
+  "com.javarush.pavlichenko.entities.concrete.UsualPlant": 70
   "com.javarush.pavlichenko.entities.concrete.Wolf": 30

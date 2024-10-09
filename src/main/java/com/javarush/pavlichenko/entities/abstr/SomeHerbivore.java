@@ -8,13 +8,10 @@ import com.javarush.pavlichenko.entities.abstr.entitiesmarkers.Herbivore;
 
 public abstract class SomeHerbivore extends SomeAnimal implements Herbivore {
 
-    protected SomeHerbivore(Island island, Coordinate coordinate) {
-        super(island, coordinate);
+    protected SomeHerbivore(Island island) {
+        super(island);
+        new EatingPlants(this);
+        new Prey(this);
 
-        EatingPlants eatingPlants = new EatingPlants(this);
-        this.addAbility(eatingPlants);
-
-        Prey prey = new Prey(this);
-        this.addAbility(prey);
     }
 }

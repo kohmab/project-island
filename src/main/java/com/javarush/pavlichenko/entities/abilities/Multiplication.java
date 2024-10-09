@@ -1,10 +1,11 @@
 package com.javarush.pavlichenko.entities.abilities;
 
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
 import com.javarush.pavlichenko.entities.island.Cell;
 import com.javarush.pavlichenko.service.IslandEntityCreator;
 import com.javarush.pavlichenko.enums.Gender;
 import com.javarush.pavlichenko.exceptions.CellIsFilledException;
-import com.javarush.pavlichenko.entities.abilities.parameters.AbilityParameter;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityParameter;
 import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanMultiply;
 import lombok.Getter;
@@ -18,11 +19,10 @@ import static java.util.Objects.isNull;
 
 @Getter
 @Slf4j
-public class Multiplication implements Ability {
+public class Multiplication extends SomeAbility {
 
-    private final CanMultiply animal;
-    private final AbilityKey key = AbilityKey.getKeyForClass(Multiplication.class);
     private final Aiging aiging;
+    private final Placement placement;
 
     @AbilityParameter
     private Integer reproductiveAge;
@@ -39,8 +39,9 @@ public class Multiplication implements Ability {
     private Integer pregnancyStage = 0;
 
     public Multiplication(CanMultiply animal) {
-        this.animal = animal;
-        this.aiging = (Aiging) animal.getAbility(AbilityKey.getKeyForClass(Aiging.class));
+        super(animal, Multiplication.class);
+        this.aiging = getAnotherAbility(Aiging.class);
+        this.placement = getAnotherAbility(Placement.class);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Multiplication implements Ability {
             return;
         } else if (aiging.getAge() == reproductiveAge) {
             isActive = true;
-            log.info("{} became sexually mature.", animal);
+            log.info(marker, "{} became sexually mature.", owner);
         }
 
         switch (gender) {
@@ -59,25 +60,26 @@ public class Multiplication implements Ability {
     }
 
     private void fertilize() {
-        log.info("{} went hunting for females.", animal);
+        log.info(marker, "{} went hunting for females.", owner);
         CanMultiply female = findPartner();
         if (isNull(female)) {
-            log.info("But {} did not find partner.", animal);
+            log.info(marker, "But {} did not find partner.", owner);
             return;
         }
-        log.info("{} found partner: {}.", animal, female);
+        log.info(marker, "{} found partner: {}.", owner, female);
         synchronized (female.getLock()) {
-            if (!animal.getCoordinate().equals(female.getCoordinate())) {
-                log.info("But {} was left by she {}.", animal, female);
+            Placement herPlacement = getAnotherAbilityFor(female, Placement.class);
+            if (!placement.getCoordinate().equals(herPlacement.getCoordinate())) {
+                log.info(marker, "But {} was left by she {}.", owner, female);
                 return;
             }
             if (female.isDead()) {
-                log.info("But {} left sad and unsatisfied. She {} died.", animal, female);
+                log.info(marker, "But {} left sad and unsatisfied. She {} died.", owner, female);
                 return;
             }
-            Multiplication herMultiplication = (Multiplication) female.getAbility(key);
+            Multiplication herMultiplication = getAnotherAbilityFor(female, Multiplication.class);
             herMultiplication.makePregnant();
-            log.info("{} fertilized {}.", animal, female);
+            log.info(marker, "{} fertilized {}.", owner, female);
         }
 
     }
@@ -87,19 +89,19 @@ public class Multiplication implements Ability {
         pregnancyStage = 0;
         List<IslandEntity> offspring = new ArrayList<>();
         try {
-            log.info("{} try to give birth.", animal);
+            log.info(marker, "{} try to give birth.", owner);
             for (int i = 0; i < broodSize; i++) {
                 IslandEntity child = IslandEntityCreator.getInstance()
-                        .create(animal.getClass(), animal.getCoordinate());
+                        .create(owner.getClass(), placement.getCoordinate());
                 offspring.add(child);
             }
         } catch (CellIsFilledException e) {
 
         } finally {
             if (offspring.isEmpty()) {
-                log.info("{} could not give birth. Cell was filled.", animal);
+                log.info(marker, "{} could not give birth. Cell was filled.", owner);
             } else {
-                log.info("{} gave birth for {}.", animal, offspring);
+                log.info(marker, "{} gave birth for {}.", owner, offspring);
             }
         }
     }
@@ -107,7 +109,7 @@ public class Multiplication implements Ability {
     private void makePregnant() {
         isActive = false;
         pregnancyStage = 0;
-        log.info("{} became pregnant.", animal);
+        log.info(marker, "{} became pregnant.", owner);
     }
 
     private void gestation() {
@@ -115,21 +117,21 @@ public class Multiplication implements Ability {
             return;
         }
         pregnancyStage += 1;
-        log.info("{} pregnancy stage increased ({} of {}).", animal, pregnancyStage, pregnancyDelay);
+        log.info(marker, "{} pregnancy stage increased ({} of {}).", owner, pregnancyStage, pregnancyDelay);
         if (pregnancyStage == pregnancyDelay) {
             giveBirth();
         }
     }
 
     private CanMultiply findPartner() {
-        Cell cell = animal.getIsland().getCell(animal.getCoordinate());
-        List<IslandEntity> possiblePartners = cell.getListOf(animal.getClass());
+        Cell cell = owner.getIsland().getCell(placement.getCoordinate());
+        List<IslandEntity> possiblePartners = cell.getListOf(owner.getClass());
         if (possiblePartners.isEmpty())
             return null;
 
         Optional<IslandEntity> partner = possiblePartners.stream()
                 .filter(otherAnimal -> {
-                    Multiplication otherMultiplication = (Multiplication) otherAnimal.getAbility(key);
+                    Multiplication otherMultiplication = otherAnimal.getAbility(key);
                     boolean isActive = otherMultiplication.isActive;
                     return (otherMultiplication.gender == Gender.FEMALE) && isActive;
                 })

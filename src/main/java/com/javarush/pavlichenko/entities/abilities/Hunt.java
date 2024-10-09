@@ -1,9 +1,10 @@
 package com.javarush.pavlichenko.entities.abilities;
 
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
 import com.javarush.pavlichenko.entities.abilities.sideclasses.PossiblePrey;
 import com.javarush.pavlichenko.entities.island.Cell;
 import com.javarush.pavlichenko.entities.island.Coordinate;
-import com.javarush.pavlichenko.entities.abilities.parameters.AbilityParameter;
+import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityParameter;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanHunt;
 import com.javarush.pavlichenko.entities.abstr.IslandEntity;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanBeCached;
@@ -17,11 +18,10 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 @Getter
-public class Hunt implements Ability {
+public class Hunt extends SomeAbility{
 
-    private final CanHunt predator;
     private final Hunger hunger;
-    private final AbilityKey key;
+    private final Placement placement;
 
     @AbilityParameter
     private List<PossiblePrey> possiblePreys;
@@ -29,53 +29,52 @@ public class Hunt implements Ability {
     private Double currentCatchProbability;
 
     public Hunt(CanHunt predator) {
-        this.predator = predator;
-        this.key = AbilityKey.getKeyFor(this);
-        this.hunger = (Hunger) predator.getAbility(AbilityKey.getKeyForClass(Hunger.class));
-
+        super(predator, Hunt.class);
+        this.hunger = getAnotherAbility(Hunger.class);
+        this.placement = getAnotherAbility(Placement.class);
     }
 
     @Override
     public void apply() {
-        log.info("{} started hunt.", predator);
+        log.info(marker, "{} started hunt.", owner);
 
         if (hunger.isNotHungry()) {
-            log.info("But {} is full.", predator);
+            log.info(marker, "But {} is full.", owner);
             return;
         }
 
 
         CanBeCached prey = findPrey();
         if (isNull(prey)) {
-            log.info("But {} did not find a prey.", predator);
+            log.info(marker, "But {} did not find a prey.", owner);
             return;
         }
 
         synchronized (prey.getLock()) {
-            log.info("{} found a prey: {}.", predator, prey);
+            log.info(marker, "{} found a prey: {}.", owner, prey);
 
 
             if (isHuntFailed()) {
-                log.info("But {} failed (miss). ", predator);
+                log.info(marker, "But {} failed (miss). ", owner);
                 return;
             }
 
             if (isPreyRunAway(prey)) {
-                log.info("But {} missed the prey {}.", predator, prey);
+                log.info(marker, "But {} missed the prey {}.", owner, prey);
                 return;
             }
 
             if (prey.isDead()) {
-                log.info("But {}'s prey ({}) was already dead.", predator, prey);
+                log.info(marker, "But {}'s prey ({}) was already dead.", owner, prey);
                 return;
             }
             prey.die();
 
-            Prey preyAbility = (Prey) (prey.getAbility(AbilityKey.getKeyForClass(Prey.class)));
+            Prey preyAbility = getAnotherAbilityFor(prey, Prey.class);
             Double preyAmount = preyAbility.getFoodAmount();
 
-            log.info("{} killed {}.", predator, prey);
-            log.info("{} was killed by {}.", prey, predator);
+            log.info(marker, "{} killed {}.", owner, prey);
+            log.info(marker, "{} was killed by {}.", prey, owner);
             hunger.addSatiety(preyAmount);
         }
     }
@@ -83,8 +82,8 @@ public class Hunt implements Ability {
 
     private CanBeCached findPrey() {
         currentCatchProbability = 0.0;
-        Coordinate coordinate = predator.getCoordinate();
-        Cell cell = predator.getIsland().getCell(coordinate);
+        Coordinate coordinate = placement.getCoordinate();
+        Cell cell = owner.getIsland().getCell(coordinate);
         CanBeCached prey = null;
         for (PossiblePrey possiblePrey : possiblePreys) {
             List<IslandEntity> listOfPreys = cell.getListOf(possiblePrey.getPreyClass());
@@ -98,7 +97,9 @@ public class Hunt implements Ability {
     }
 
     private boolean isPreyRunAway(CanBeCached prey) {
-        return !predator.getCoordinate().equals(prey.getCoordinate());
+        Coordinate predatorCoordinate = placement.getCoordinate();
+        Coordinate preyCoordinate = getAnotherAbilityFor(prey, Placement.class).getCoordinate();
+        return !predatorCoordinate.equals(preyCoordinate);
     }
 
     private boolean isHuntFailed() {

@@ -10,9 +10,5 @@ import java.util.concurrent.Callable;
 public interface IslandEntity extends Callable<IslandEntity>,  Mortal, HasAbilities, Lockable {
     Island getIsland();
 
-    Coordinate getCoordinate();
-
-    void setCoordinate(Coordinate newCoordinate);
-
     UUID getId();
 }

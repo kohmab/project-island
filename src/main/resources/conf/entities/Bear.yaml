@@ -1,17 +1,17 @@
-hunger:
+Hunger:
   maxSatiety: 80
   satiety: 80
   hungryRate: 4
 
-movement:
+Movement:
   speed: 2
 
-multiplication:
+Multiplication:
   reproductiveAge: 10
   pregnancyDelay: 6
   broodSize: 1
 
-hunt:
+Hunt:
   possiblePreys:
     - preyClass: "com.javarush.pavlichenko.entities.concrete.Boa"
       catchProbability: 0.80
