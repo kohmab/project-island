@@ -33,15 +33,15 @@ public class IslandPopulator {
             Class<? extends IslandEntity> entityClass = entry.getKey();
             Integer targetCount = entry.getValue();
 
-            Set<Coordinate> avaliableCoordinate = new HashSet<>(island.getMap().keySet());
+            Set<Coordinate> availableCoordinate = new HashSet<>(island.getMap().keySet());
 
             try {
                 for (int i = 0; i < targetCount; i++) {
-                    Coordinate coordinate = getRandom(avaliableCoordinate);
+                    Coordinate coordinate = getRandom(availableCoordinate);
                     entityCreator.create(entityClass, coordinate);
 
                     if (island.getMap().get(coordinate).isFilledFor(entityClass)){
-                        avaliableCoordinate.remove(coordinate);
+                        availableCoordinate.remove(coordinate);
                     }
 
                 }

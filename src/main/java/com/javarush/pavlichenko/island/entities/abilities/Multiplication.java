@@ -128,15 +128,16 @@ public class Multiplication extends SomeAbility {
         if (possiblePartners.isEmpty())
             return null;
 
-        Optional<IslandEntity> partner = possiblePartners.stream()
-                .filter(otherAnimal -> {
-                    Multiplication otherMultiplication = otherAnimal.getAbility(key);
-                    boolean isActive = otherMultiplication.isActive;
-                    return (otherMultiplication.gender == Gender.FEMALE) && isActive;
-                })
-                .findFirst();
+        for (IslandEntity possiblePartner : possiblePartners) {
+            Multiplication otherMultiplication = getAnotherAbilityFor(possiblePartner, Multiplication.class);
+            if (otherMultiplication.gender == Gender.MALE)
+                continue;
+            if (!otherMultiplication.isActive)
+                continue;
+            return (CanMultiply) possiblePartner;
+        }
 
-        return (CanMultiply) partner.orElse(null);
+        return null;
 
     }
 }

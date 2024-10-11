@@ -114,7 +114,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.javarush.pavlichenko.Main</mainClass>
+                            <mainClass>com.javarush.pavlichenko.island.Main</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
@@ -127,7 +127,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <mainClass>com.javarush.pavlichenko.Main</mainClass>
+                    <mainClass>com.javarush.pavlichenko.island.Main</mainClass>
                 </configuration>
             </plugin>
 
