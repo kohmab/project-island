@@ -1,6 +1,5 @@
 package com.javarush.pavlichenko.entities.abilities;
 
-import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
 import com.javarush.pavlichenko.entities.island.Cell;
 import com.javarush.pavlichenko.service.IslandEntityCreator;
 import com.javarush.pavlichenko.enums.Gender;
@@ -21,7 +20,7 @@ import static java.util.Objects.isNull;
 @Slf4j
 public class Multiplication extends SomeAbility {
 
-    private final Aiging aiging;
+    private final Aging aiging;
     private final Placement placement;
 
     @AbilityParameter
@@ -40,7 +39,7 @@ public class Multiplication extends SomeAbility {
 
     public Multiplication(CanMultiply animal) {
         super(animal, Multiplication.class);
-        this.aiging = getAnotherAbility(Aiging.class);
+        this.aiging = getAnotherAbility(Aging.class);
         this.placement = getAnotherAbility(Placement.class);
     }
 

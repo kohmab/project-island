@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Hunger extends SomeAbility {
 
     @AbilityParameter
-    private Double maxSatiety; // TODO set according game rules
+    private Double maxSatiety;
 
     @AbilityParameter
     private Double hungryRate;

@@ -19,13 +19,14 @@ public class DeadEntitiesBiographyCollector {
         for (IslandEntity entity : deadEntities) {
             Class<? extends IslandEntity> aClass = entity.getClass();
             if (!diaries.containsKey(aClass))
-                diaries.put(aClass,new ConcurrentHashMap<>());
+                diaries.put(aClass, new ConcurrentHashMap<>());
             UUID id = entity.getId();
             ConcurrentMap<UUID, List<String>> entitiesLifecycleEvents = appender.getEntityLifecycleEvents();
             List<String> biographyItems = entitiesLifecycleEvents.get(id);
             entitiesLifecycleEvents.remove(id);
-            String biography = String.format("This story began on day number %d.\n", dayNo) + String.join("\n", biographyItems);
-            diaries.get(aClass).put(id,biography);
+            String biography = String.join("\n", biographyItems)
+                    + String.format("\nThis tragic story ended on the day number %d.", dayNo);
+            diaries.get(aClass).put(id, biography);
         }
 
     }

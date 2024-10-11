@@ -1,6 +1,5 @@
 package com.javarush.pavlichenko.entities.abilities;
 
-import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanBeEaten;
 import lombok.extern.slf4j.Slf4j;
 

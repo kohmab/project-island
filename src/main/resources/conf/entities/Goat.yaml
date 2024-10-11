@@ -1,3 +1,6 @@
+Aging:
+  oldAge: 50
+
 Hunger:
   maxSatiety: 10
   satiety : 10

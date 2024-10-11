@@ -2,7 +2,7 @@ package com.javarush.pavlichenko.entities.abstr;
 
 import com.javarush.pavlichenko.entities.abilities.Placement;
 import com.javarush.pavlichenko.entities.abilities.sideclasses.AbilityKey;
-import com.javarush.pavlichenko.entities.abilities.Aiging;
+import com.javarush.pavlichenko.entities.abilities.Aging;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.CanAge;
 import com.javarush.pavlichenko.entities.abstr.abilitymarkers.HasPlace;
 import com.javarush.pavlichenko.entities.island.Island;
@@ -37,7 +37,7 @@ public abstract class SomeIslandEntity implements IslandEntity, CanAge, HasPlace
         this.island = island;
 
         new Placement(this);
-        new Aiging(this);
+        new Aging(this);
     }
 
     @Override

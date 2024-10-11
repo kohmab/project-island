@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.javarush.pavlichenko.helpers.Helpers.getRandom;
 import static java.util.Objects.isNull;
 
 @Slf4j
@@ -88,7 +89,7 @@ public class Hunt extends SomeAbility{
         for (PossiblePrey possiblePrey : possiblePreys) {
             List<IslandEntity> listOfPreys = cell.getListOf(possiblePrey.getPreyClass());
             if (!listOfPreys.isEmpty()) {
-                prey = (CanBeCached) listOfPreys.get(0);
+                prey = (CanBeCached) getRandom(listOfPreys);
                 currentCatchProbability = possiblePrey.getCatchProbability();
                 break;
             }

@@ -26,7 +26,7 @@ public class Main {
         System.out.println("Game started.");
         while (true) {
             gameStep();
-            controller.showPrompt();
+            controller.invoke();
         }
     }
 

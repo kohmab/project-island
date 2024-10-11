@@ -56,7 +56,9 @@ public class EntityDiaryAppender extends AbstractAppender {
             if (!entityLifecycleEvents.containsKey(id))
                 entityLifecycleEvents.put(id, new ArrayList<>());
             else {
-                message = message.replace(entity.toString(), "")
+                message = message
+                        .replace(entity + "'s","")
+                        .replace(entity.toString(), "")
                         .replaceAll("( )+", " ")
                         .trim();
                 message = StringUtils.capitalize(message);

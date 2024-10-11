@@ -1,3 +1,6 @@
+Aging:
+  oldAge: 7
+
 Hunger:
   maxSatiety: 0.45
   satiety : 0.45

@@ -1,3 +1,6 @@
+Aging:
+  oldAge: 20
+
 Hunger:
   maxSatiety: 0.15
   satiety : 0.15

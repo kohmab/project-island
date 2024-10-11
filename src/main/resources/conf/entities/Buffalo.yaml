@@ -1,3 +1,6 @@
+Aging:
+  oldAge: 100
+
 Hunger:
   maxSatiety: 100
   satiety : 100

@@ -16,8 +16,6 @@ import java.util.concurrent.Future;
 @Slf4j
 public class IslandIterator {
 
-    private final EntityDiaryAppender history = EntityDiaryAppender.getInstance();
-
     private final Island island;
     private final ExecutorService executor;
 

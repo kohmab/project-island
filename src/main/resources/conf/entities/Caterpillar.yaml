@@ -1,3 +1,6 @@
+Aging:
+  oldAge: 4
+
 Hunger:
   maxSatiety: 0.0001
   satiety : 0.0001

@@ -1,6 +1,6 @@
-islandWidth: 10
+islandWidth: 25
 
-islandHeight: 7
+islandHeight: 20
 
 threadsCount: 16
 
@@ -19,5 +19,5 @@ initialCreaturesCount:
   "com.javarush.pavlichenko.entities.concrete.Mice": 500
   "com.javarush.pavlichenko.entities.concrete.Rabbit": 150
   "com.javarush.pavlichenko.entities.concrete.Sheep": 140
-  "com.javarush.pavlichenko.entities.concrete.UsualPlant": 70
+  "com.javarush.pavlichenko.entities.concrete.UsualPlant": 170
   "com.javarush.pavlichenko.entities.concrete.Wolf": 30

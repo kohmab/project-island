@@ -20,31 +20,35 @@ public class GameController {
     private final ConsoleView view;
 
 
-    private final Set<String> commands = new HashSet<>() {{
-        addAll(Helpers.getClassNames());
-        add("count");
-        add("exit");
-        add("help");
-        add("next");
-        add("story");
-
-    }};
-
     public GameController(Terminal terminal, ConsoleView view) {
         this.terminal = terminal;
         this.view = view;
 
+        Set<String> commands = new HashSet<>() {{
+            addAll(Helpers.getClassNames());
+            add("count");
+            add("exit");
+            add("help");
+            add("next");
+            add("story");
+
+        }};
         reader = LineReaderBuilder.builder()
                 .terminal(terminal)
                 .completer(new StringsCompleter(commands))
                 .build();
     }
 
+    public void invoke(){
+        view.printDayStats();
+        showPrompt();
+    }
+
     public void showPrompt() {
 
         String command;
         try {
-            command = reader.readLine("> ").trim();
+            command = reader.readLine("\n > ").trim();
         } catch (UserInterruptException | EndOfFileException e) {
             command = "exit";
         }
@@ -61,7 +65,7 @@ public class GameController {
             Class<? extends IslandEntity> entityClass = Helpers.getClassNamed(command);
             view.printCountOf(entityClass);
         } else {
-            System.out.println(HELP_MESSAGE);
+            terminal.writer().println(HELP_MESSAGE);
         }
 
         showPrompt();
