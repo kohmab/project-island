@@ -17,12 +17,12 @@ Multiplication:
 
 Hunt:
   possiblePreys:
-    - preyClass: "com.javarush.pavlichenko.entities.concrete.Fox"
+    - preyClass: "com.javarush.pavlichenko.island.entities.concrete.Fox"
       catchProbability: 0.15
-    - preyClass: "com.javarush.pavlichenko.entities.concrete.Mice"
+    - preyClass: "com.javarush.pavlichenko.island.entities.concrete.Mice"
       catchProbability: 0.40
-    - preyClass: "com.javarush.pavlichenko.entities.concrete.Duck"
+    - preyClass: "com.javarush.pavlichenko.island.entities.concrete.Duck"
       catchProbability: 0.10
-    - preyClass: "com.javarush.pavlichenko.entities.concrete.Rabbit"
+    - preyClass: "com.javarush.pavlichenko.island.entities.concrete.Rabbit"
       catchProbability: 0.20
 

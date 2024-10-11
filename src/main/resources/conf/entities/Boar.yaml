@@ -19,7 +19,7 @@ Prey:
 
 Hunt:
   possiblePreys:
-    - preyClass: "com.javarush.pavlichenko.entities.concrete.Caterpillar"
+    - preyClass: "com.javarush.pavlichenko.island.entities.concrete.Caterpillar"
       catchProbability: 0.9
-    - preyClass: "com.javarush.pavlichenko.entities.concrete.Mice"
+    - preyClass: "com.javarush.pavlichenko.island.entities.concrete.Mice"
       catchProbability: 0.5

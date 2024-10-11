@@ -5,19 +5,19 @@ islandHeight: 20
 threadsCount: 16
 
 initialCreaturesCount:
-  "com.javarush.pavlichenko.entities.concrete.Bear": 5
-  "com.javarush.pavlichenko.entities.concrete.Boa": 30
-  "com.javarush.pavlichenko.entities.concrete.Boar": 50
-  "com.javarush.pavlichenko.entities.concrete.Buffalo": 10
-  "com.javarush.pavlichenko.entities.concrete.Caterpillar": 140
-  "com.javarush.pavlichenko.entities.concrete.Deer": 300
-  "com.javarush.pavlichenko.entities.concrete.Duck": 200
-  "com.javarush.pavlichenko.entities.concrete.Eagle": 20
-  "com.javarush.pavlichenko.entities.concrete.Fox": 30
-  "com.javarush.pavlichenko.entities.concrete.Goat": 140
-  "com.javarush.pavlichenko.entities.concrete.Horse": 20
-  "com.javarush.pavlichenko.entities.concrete.Mice": 500
-  "com.javarush.pavlichenko.entities.concrete.Rabbit": 150
-  "com.javarush.pavlichenko.entities.concrete.Sheep": 140
-  "com.javarush.pavlichenko.entities.concrete.UsualPlant": 170
-  "com.javarush.pavlichenko.entities.concrete.Wolf": 30
+  "com.javarush.pavlichenko.island.entities.concrete.Bear": 5
+  "com.javarush.pavlichenko.island.entities.concrete.Boa": 30
+  "com.javarush.pavlichenko.island.entities.concrete.Boar": 50
+  "com.javarush.pavlichenko.island.entities.concrete.Buffalo": 10
+  "com.javarush.pavlichenko.island.entities.concrete.Caterpillar": 140
+  "com.javarush.pavlichenko.island.entities.concrete.Deer": 300
+  "com.javarush.pavlichenko.island.entities.concrete.Duck": 200
+  "com.javarush.pavlichenko.island.entities.concrete.Eagle": 20
+  "com.javarush.pavlichenko.island.entities.concrete.Fox": 30
+  "com.javarush.pavlichenko.island.entities.concrete.Goat": 140
+  "com.javarush.pavlichenko.island.entities.concrete.Horse": 20
+  "com.javarush.pavlichenko.island.entities.concrete.Mice": 500
+  "com.javarush.pavlichenko.island.entities.concrete.Rabbit": 150
+  "com.javarush.pavlichenko.island.entities.concrete.Sheep": 140
+  "com.javarush.pavlichenko.island.entities.concrete.UsualPlant": 170
+  "com.javarush.pavlichenko.island.entities.concrete.Wolf": 30
