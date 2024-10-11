@@ -81,7 +81,7 @@ public class GameController {
                        exit   -   exit the game;
                        help   -   show this message;
                        next   -   next iteration;
-                       story  -   display story of the random entity perished today;
+                       story  -   display story of the random perished entity;
                     """.formatted(Helpers.getClassNames());
 
 

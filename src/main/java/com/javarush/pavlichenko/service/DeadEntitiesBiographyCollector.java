@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 public class DeadEntitiesBiographyCollector {
 
     private final EntityDiaryAppender appender = EntityDiaryAppender.getInstance();
-    private final Map<Class<? extends IslandEntity>, Map<UUID, String>> diaries = new ConcurrentHashMap<>();
+    private Map<Class<? extends IslandEntity>, Map<UUID, String>> diaries = new ConcurrentHashMap<>();
 
     public void collectFor(@NonNull List<IslandEntity> deadEntities, Integer dayNo) {
         for (IslandEntity entity : deadEntities) {
@@ -50,6 +50,10 @@ public class DeadEntitiesBiographyCollector {
             }
         }
         return null;
+    }
+
+    public void clear(){
+        diaries = new ConcurrentHashMap<>();
     }
 
 
